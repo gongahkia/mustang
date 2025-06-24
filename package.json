@@ -1,0 +1,31 @@
+{
+  "name": "mustang",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm:dev-*\"",
+    "dev-client": "cd client && npm run dev",
+    "dev-server": "cd server && flask run --port 5000",
+    "build": "concurrently \"npm:build-*\"",
+    "build-client": "cd client && npm run build",
+    "build-server": "cd server && pip install -r requirements.txt",
+    "test": "concurrently \"npm:test-*\"",
+    "test-client": "cd client && npm test",
+    "test-server": "cd server && pytest",
+    "docker:dev": "docker-compose up --build",
+    "docker:prod": "docker-compose -f infra/docker-compose.prod.yml up --build",
+    "deploy:client": "firebase deploy --only hosting",
+    "deploy:server": "git push heroku main"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  client:
+    image: mustang-client:prod
+    build:
+      context: ../client
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=https://api.mustang.example.com
+    networks:
+      - mustang-net
+
+  server:
+    image: mustang-server:prod
+    build:
+      context: ../server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - REDIS_URL=redis://redis:6379/0
+      - FIREBASE_CREDENTIALS=/secrets/firebase.json
+    volumes:
+      - firebase-creds:/secrets
+    networks:
+      - mustang-net
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:7-alpine"
+    command: redis-server --save "" --appendonly no
+    volumes:
+      - redis-data:/data
+    networks:
+      - mustang-net
+
+volumes:
+  firebase-creds:
+  redis-data:
+
+networks:
+  mustang-net:
+    driver: bridge

@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - node_modules:/app/node_modules
+    environment:
+      - VITE_API_BASE_URL=http://server:5000
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+    environment:
+      - FLASK_ENV=development
+      - FIREBASE_PROJECT_ID=mustang-dev
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - "6379:6379"
+    command: redis-server --save "" --appendonly no
+    volumes:
+      - redis-data:/data
+
+volumes:
+  node_modules:
+  redis-data:

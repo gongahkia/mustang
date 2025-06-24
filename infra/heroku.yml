@@ -1,0 +1,20 @@
+build:
+  docker:
+    web: server/Dockerfile
+run:
+  web: gunicorn --bind 0.0.0.0:$PORT wsgi:app
+config:
+  FIREBASE_CREDENTIALS: /app/firebase-creds.json
+  FLASK_ENV: production
+  REDIS_URL: ${REDIS_URL}
+  TZ: UTC
+build:
+  docker:
+    web: server/Dockerfile
+run:
+  web: gunicorn --bind 0.0.0.0:$PORT wsgi:app
+config:
+  FIREBASE_CREDENTIALS: /app/firebase-creds.json
+  FLASK_ENV: production
+  REDIS_URL: ${REDIS_URL}
+  TZ: UTC
