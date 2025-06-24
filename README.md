@@ -1,6 +1,6 @@
+[![](https://img.shields.io/badge/mustang_1.0.0-passing-green)](https://github.com/gongahkia/mustang/releases/tag/1.0.0) 
 
-
-# `Mustang`
+# `Mustang` 🔥
 
 ...
 
