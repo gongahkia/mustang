@@ -1,0 +1,60 @@
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.spinner {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.spinner-sector {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  mix-blend-mode: overlay;
+}
+
+.spinner-sector-red {
+  border-top-color: #ff4d4f;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-sector-blue {
+  border-top-color: #1890ff;
+  animation: spin 1.2s linear infinite reverse;
+}
+
+.spinner-sector-green {
+  border-top-color: #52c41a;
+  animation: spin 1.5s linear infinite;
+}
+
+.spinner-security-message {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+  max-width: 300px;
+}
+
+.encryption-badge {
+  display: inline-block;
+  margin-right: 10px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}

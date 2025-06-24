@@ -1,0 +1,40 @@
+:root {
+  --zeroize-red: #ff4d4f;
+  --encrypted-green: #52c41a;
+  --dark-bg: #0d1117;
+}
+
+body {
+  margin: 0;
+  font-family: 'SF Mono', monospace;
+  background-color: var(--dark-bg);
+  color: #e6e6e6;
+  overflow-x: hidden;
+}
+
+.crypto-warning {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--zeroize-red);
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.chain-visualizer {
+  border: 1px solid #30363d;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 6px;
+  background: #161b22;
+}
+
+@keyframes purge-animation {
+  0% { opacity: 1; }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+
+.purging {
+  animation: purge-animation 0.5s forwards;
+}

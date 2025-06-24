@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark">
+    <title>Mustang Client App</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <script src="/env-config.js"></script>
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';">
+    <meta name="referrer" content="no-referrer">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <div id="zeroize-confirm" aria-live="polite" hidden></div>
+  </body>
+</html>
