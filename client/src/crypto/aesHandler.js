@@ -32,3 +32,22 @@ export const exportKey = async (key) => {
 export const importKey = async (rawKey) => {
   return crypto.subtle.importKey('raw', rawKey, ALGORITHM, true, ['encrypt', 'decrypt']);
 };
+
+export async function encryptMessage(plaintext, key) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ciphertext = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv, tagLength: 128 },
+    key,
+    plaintext
+  );
+  return { iv, ciphertext };
+}
+
+export async function decryptMessage(ciphertext, iv, key) {
+  const plaintext = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv, tagLength: 128 },
+    key,
+    ciphertext
+  );
+  return new Uint8Array(plaintext);
+}

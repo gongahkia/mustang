@@ -33,3 +33,11 @@ export const zeroizePrivateKey = async (key) => {
     crypto.subtle.zeroize(key);
   }
 };
+
+export async function generateEphemeralKey() {
+  return crypto.subtle.generateKey(
+    { name: 'ECDH', namedCurve: 'P-256' },
+    true,
+    ['deriveKey', 'deriveBits']
+  );
+}
