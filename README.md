@@ -78,19 +78,153 @@ $ zap.sh -cmd -config tests/fuzz/zap_full_scan.conf
 ### Frontend
 
 ```mermaid
+flowchart TD
+    subgraph Frontend Architecture
+        A[React App] --> B[AuthContext]
+        A --> C[CryptoContext]
+        A --> D[ProtectedRoute]
+        A --> E[Dashboard]
 
+        B --> F[Firebase Auth]
+        B --> G[WebAuthn Hardware Auth]
+
+        C --> H[Web Workers]
+        H --> I["AES-256-GCM Encryption"]
+        H --> J["ECDH Key Exchange"]
+        H --> K["Hash Chain Builder"]
+        H --> L["Zeroization Utilities"]
+
+        E --> M[MessageComposer]
+        E --> N[ChainMonitor]
+        E --> O[AutoPurgeNotifier]
+
+        M --> C
+        N --> C
+        O --> C
+
+        C --> P[API Client]
+        P --> Q[Python Backend]
+        
+        style A fill:#2ecc71,stroke:#27ae60
+        style H fill:#3498db,stroke:#2980b9
+        style I,J,K,L fill:#9b59b6,stroke:#8e44ad
+    end
+
+    subgraph Security Utilities
+        R["Memory Zeroization"] --> S["crypto.subtle.zeroize()"]
+        T["TTL Enforcement"] --> U["55s/60s Countdown"]
+        V["Content Security"] --> W["Strict CSP Headers"]
+        X["Key Management"] --> Y["Web Crypto API"]
+    end
+
+    H --> R
+    O --> T
+    A --> V
+    C --> X
 ```
 
 ### Backend
 
 ```mermaid
-
+flowchart TD
+    subgraph Backend Architecture
+        A[Flask App] --> B[Request Entry]
+        B --> C{Auth Required?}
+        C -->|Yes| D[Firebase Auth]
+        C -->|No| E[Process Request]
+        
+        D --> F[Verify ID Token]
+        F -->|Valid| G[Get User Public Key]
+        F -->|Invalid| H[401 Unauthorized]
+        
+        E --> I[Message Processing]
+        I --> J[Relay Request]
+        
+        J --> K[Chain Verifier]
+        K --> L[Verify Hash Chain]
+        L --> M[Check: SHA-256 + current_hash]
+        M -->|Valid| N[Store in Redis]
+        M -->|Invalid| O[400 Bad Request]
+        
+        N --> P[Set 60s TTL]
+        N --> Q[Return Message ID]
+        
+        subgraph Data Stores
+            R[(Redis)] -->|Store| S["{ciphertext, iv, chain_hash}<br>TTL=60s"]
+            T[(Firestore)] --> U[User Public Keys]
+        end
+        
+        D --> T
+        N --> R
+        G --> T
+        
+        style A fill:#2ecc71,stroke:#27ae60
+        style K fill:#3498db,stroke:#2980b9
+        style M fill:#9b59b6,stroke:#8e44ad
+    end
 ```
 
 ### DB
 
 ```mermaid
+erDiagram
+    USERS ||--o{ MESSAGES : "1:N"
+    USERS ||--o{ PUBLIC_KEYS : "1:1"
+    MESSAGES ||--o{ CHAIN_LINKS : "1:N"
+    AUDIT_LOGS }|--|| USERS : "N:1"
+    COMPLIANCE_REPORTS }|--|| USERS : "N:1"
 
+    USERS {
+        string user_id PK "UID from Firebase Auth"
+        string email
+        timestamp created_at
+        timestamp last_login
+    }
+    
+    PUBLIC_KEYS {
+        string user_id FK "References USERS.user_id"
+        string public_key "PEM format"
+        timestamp generated_at
+        timestamp expires_at
+        bool is_active
+    }
+    
+    MESSAGES {
+        string message_id PK "UUIDv4"
+        string sender_id FK "References USERS.user_id"
+        string recipient_id FK "References USERS.user_id"
+        timestamp sent_at
+        timestamp expires_at "TTL timestamp"
+        string status "SENT/DELIVERED/READ/PURGED"
+    }
+    
+    CHAIN_LINKS {
+        string link_id PK "Composite: message_id + sequence"
+        string message_id FK "References MESSAGES.message_id"
+        int sequence
+        bytes previous_hash "SHA-256"
+        bytes current_hash "SHA-256(prev_hash + current_hash)"
+        bytes iv "12-byte IV"
+        bytes ciphertext "AES-256-GCM encrypted"
+    }
+    
+    AUDIT_LOGS {
+        string event_id PK "UUIDv4"
+        string user_id FK "References USERS.user_id"
+        string event_type "PURGE/CHAIN_ALERT/LOGIN"
+        string message_id FK "Nullable, References MESSAGES.message_id"
+        json details
+        timestamp occurred_at
+    }
+    
+    COMPLIANCE_REPORTS {
+        string report_id PK "UUIDv4"
+        string user_id FK "References USERS.user_id"
+        string report_type "SOC2/FIPS/HSM"
+        timestamp generated_at
+        string storage_path "Encrypted in GCS"
+        string checksum "SHA-256 of report"
+    }
 ```
 
 ## Reference
