@@ -10,14 +10,12 @@
 
 ## Stack
 
-* *Frontend*: 
-* *Backend*: 
-* *Package*: [Docker]()
-* **: []()
-* **: []()
-* **: []()
-* **: []()
-* **: []()
+* *Frontend*: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
+* *Backend*: [Flask](https://flask.palletsprojects.com/en/stable/), [Python](https://www.python.org/), [Gunicorn](https://gunicorn.org/), [Heroku](https://www.heroku.com/)
+* *Package*: [Docker](https://www.docker.com/)
+* *Cache*: [Redis](https://redis.io/about/)
+* *DB*: [Firebase Firestore](https://firebase.google.com/docs/firestore)
+* *Auth*: [Firebase Auth](https://firebase.google.com/docs/auth), [WebAuthn](https://webauthn.io/), [JWT](https://jwt.io/)
 
 ## Usage
 

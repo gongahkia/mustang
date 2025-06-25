@@ -48,3 +48,4 @@ secrets/
 *.crt
 *.p12
 firebase-service-account.json
+myenv
