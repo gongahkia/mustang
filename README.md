@@ -4,14 +4,6 @@
 
 Cryptographically-secure Communication Platform with [Auto-destructing messages](./client/src/utils/purgeService.js), [Client-side Encryption](./client/src/crypto/) and [Hash Chaining](./server/src/chain/).
 
-## Rationale
-
-Ever since learning about the tech behind [classic blockchain systems](https://en.wikipedia.org/wiki/Blockchain), I couldn't shake the feeling that its [immutable, tamper-resistant](https://log-locker.com/en/blog/the-importance-of-immutable-and-tamper-proof-data-in-compliance) properties would be beneficial for developing a secure, zero-trust communication tool. 
-
-With that in mind, I threw together `Mustang`.
-
-`Mustang` is a Security-first Communication Platform-as-Framework designed to provide [Zero-trust](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/), [TTL-based](https://en.wikipedia.org/wiki/Time_to_live) temporal messaging. It achieves this by integrating Client-side [AES-256-GCM Encryption](https://en.wikipedia.org/wiki/Galois/Counter_Mode) with [ECDH key exchange](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman), reinforced by [Cryptographic hash chaining](https://en.wikipedia.org/wiki/Hash_chain) and Redis' [Ephemeral storage](https://redis.io/docs/latest/operate/rs/installing-upgrading/install/plan-deployment/persistent-ephemeral-storage/) to guarantee [Message integrity](https://www.geeksforgeeks.org/computer-networks/message-integrity-in-cryptography/) and zero [Plaintext persistence](https://en.wikipedia.org/wiki/Persistence_(computer_science)) even over Server-facilitated transmission.
-
 ## Stack
 
 * *Frontend*: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
@@ -21,6 +13,16 @@ With that in mind, I threw together `Mustang`.
 * *DB*: [Firebase Firestore](https://firebase.google.com/docs/firestore)
 * *Auth*: [Firebase Auth](https://firebase.google.com/docs/auth), [WebAuthn](https://webauthn.io/), [JWT](https://jwt.io/)
 * *CI/CD*: [Github Actions](https://github.com/features/actions)
+
+## Rationale
+
+Ever since learning about the tech behind [classic blockchain systems](https://en.wikipedia.org/wiki/Blockchain), I couldn't shake the feeling that its [immutable, tamper-resistant](https://log-locker.com/en/blog/the-importance-of-immutable-and-tamper-proof-data-in-compliance) properties would be beneficial for developing a secure, zero-trust communication tool. 
+
+With that in mind, I threw together `Mustang`.
+
+`Mustang` is a Security-first Communication Platform-as-Framework designed to provide [Zero-trust](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/), [TTL-based](https://en.wikipedia.org/wiki/Time_to_live) temporal messaging. It achieves this by integrating Client-side [AES-256-GCM Encryption](https://en.wikipedia.org/wiki/Galois/Counter_Mode) with [ECDH key exchange](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman), reinforced by [Cryptographic hash chaining](https://en.wikipedia.org/wiki/Hash_chain) and Redis' [Ephemeral storage](https://redis.io/docs/latest/operate/rs/installing-upgrading/install/plan-deployment/persistent-ephemeral-storage/) to guarantee [Message integrity](https://www.geeksforgeeks.org/computer-networks/message-integrity-in-cryptography/) and zero [Plaintext persistence](https://en.wikipedia.org/wiki/Persistence_(computer_science)) even over Server-facilitated transmission.
+
+`Mustang` also acts as my [second](https://github.com/gongahkia/kiwi) official foray into the Cyber Security space, so there's much I still have to learn. Please [***open an issue***](https://github.com/gongahkia/mustang/issues) to help improve `Mustang`. I appreciate any guidance I can get.
 
 ## Usage
 
