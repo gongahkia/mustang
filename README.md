@@ -60,13 +60,31 @@ $ zap.sh -cmd -config tests/fuzz/zap_baseline.conf
 $ zap.sh -cmd -config tests/fuzz/zap_full_scan.conf
 ```
 
-## Screenshot
-
-...
-
 ## Architecture
 
-...
+### Overview
+
+```mermaid
+
+```
+
+### Frontend
+
+```mermaid
+
+```
+
+### Backend
+
+```mermaid
+
+```
+
+### DB
+
+```mermaid
+
+```
 
 ## Reference
 
