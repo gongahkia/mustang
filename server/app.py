@@ -1,6 +1,7 @@
 from flask import Flask
 from src.routes import register_blueprints
 from config.settings import Config
+from src.firebase.admin import init_firebase
 
 def create_app():
     app = Flask(__name__)
