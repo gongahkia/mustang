@@ -21,6 +21,7 @@
     "eslint-plugin-security": "^1.0.0",
     "snyk": "^1.1297.3",
     "vite": "^4.4.0",
+    "vite-plugin-node-polyfills": "^0.23.0",
     "vite-plugin-pwa": "^0.17.0"
   },
   "browserslist": [
