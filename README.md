@@ -10,15 +10,57 @@
 
 ## Stack
 
-...
+* *Frontend*: 
+* *Backend*: 
+* *Package*: [Docker]()
+* **: []()
+* **: []()
+* **: []()
+* **: []()
+* **: []()
 
 ## Usage
 
+The below instructions are for locally hosting `Mustang`.
+
+1. First execute the below.
+
 ```console
-$ 
+$ git clone https://github.com/gongahkia/mustang && cd mustang
 ```
 
-...
+2. Then run the below to start up the [Frontend](./client/) and [Backend](./server/).
+
+```console
+$ docker run -d -p 6379:6379 --name mustang-redis redis:7-alpine
+$ cd server && python app.py & SERVER_PID=$! && cd ..
+$ cd client && npm run dev
+```
+
+3. Alternatively, run the below to run [unit tests](./tests/).
+
+```console
+$ npm --prefix client test
+$ cd server && pytest && cd ..
+```
+
+4. Run the below to run [load tests](./tests/).
+
+```console
+$ cd server && gunicorn --config config/gunicorn.conf.py wsgi:app & SERVER_PID=$! && cd ..
+$ k6 run tests/load/api_load_test.js
+$ k6 run tests/load/crypto_benchmark.js
+$ k6 run tests/load/websocket_test.js
+$ kill $SERVER_PID
+```
+
+5. Run the below to run [security and fuzz tests](./tests/).
+
+```console
+$ python -m unittest tests/fuzz/api_security_test.py
+$ zap.sh -cmd -config tests/fuzz/zap_baseline.conf
+$ zap.sh -cmd -config tests/fuzz/zap_full_scan.conf
+```
 
 ## Screenshot
 
