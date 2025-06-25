@@ -297,4 +297,8 @@ The name `Mustang` is in reference to [Roy Mustang](https://fma.fandom.com/wiki/
 
 ## Research
 
-...
+* [*Quantum Cryptography for Secure Communications and the Enhancement of U.S. Cybersecurity in the Quantum Age*](https://journals.scholarpublishing.org/index.php/ASSRJ/article/view/17764) by Mahmud Hasan 
+* [*EagleSignV3 : A new secure variant of EagleSign signature over lattices*](https://eprint.iacr.org/2024/1234) by Abiodoun Clement Hounkpevi, Sidoine Djimnaibeye, Michel Seck, Djiby Sow
+* [*Generative AI for Secure Physical Layer Communications: A Survey*](https://www.uwaterloo.ca/scholar/sites/ca.scholar/files/sshen/files/zhao2025generative.pdf) by Changyuan Zhao, Hongyang Du, Dusit Niyato, Jiawen Kang, Zehui Xiong, Dong In Kim, Xuemin Shen, Khaled B. Letaief 
+* [*The Galois/Counter Mode of Operation (GCM)*](https://csrc.nist.rip/groups/ST/toolkit/BCM/documents/proposedmodes/gcm/gcm-spec.pdf) by David A. McGrew, John Viega
+* [*Zero Trust Architecture: A Systematic Literature Review*](https://arxiv.org/abs/2503.11659) by Muhammad Liman Gambo, Ahmad Almulhem
