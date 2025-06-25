@@ -22,7 +22,9 @@ With that in mind, I threw together `Mustang`.
 
 `Mustang` is a Security-first Communication Platform-as-Framework designed to provide [Zero-trust](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/), [TTL-based](https://en.wikipedia.org/wiki/Time_to_live) temporal messaging. It achieves this by integrating Client-side [AES-256-GCM Encryption](https://en.wikipedia.org/wiki/Galois/Counter_Mode) with [ECDH key exchange](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman), reinforced by [Cryptographic hash chaining](https://en.wikipedia.org/wiki/Hash_chain) and Redis' [Ephemeral storage](https://redis.io/docs/latest/operate/rs/installing-upgrading/install/plan-deployment/persistent-ephemeral-storage/) to guarantee [Message integrity](https://www.geeksforgeeks.org/computer-networks/message-integrity-in-cryptography/) and zero [Plaintext persistence](https://en.wikipedia.org/wiki/Persistence_(computer_science)) even over Server-facilitated transmission.
 
-`Mustang` also acts as my [second](https://github.com/gongahkia/kiwi) official foray into the Cyber Security space, so there's much I still have to learn. Please [***open an issue***](https://github.com/gongahkia/mustang/issues) to help improve `Mustang`. I appreciate any guidance I can get.
+`Mustang` also acts as my [second](https://github.com/gongahkia/kiwi) official foray into the Cyber Security space, so there's much I still have to learn.  
+
+Please [***open an issue***](https://github.com/gongahkia/mustang/issues) to help improve `Mustang`. I appreciate any guidance I can get.
 
 ## Usage
 
