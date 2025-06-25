@@ -72,7 +72,67 @@ $ zap.sh -cmd -config tests/fuzz/zap_full_scan.conf
 ### Overview
 
 ```mermaid
+sequenceDiagram
+    Actor User as User
+    participant FE as Frontend (React)
+    participant BE as Backend (Flask)
+    participant FA as Firebase Auth
+    participant FS as Firestore
+    participant RD as Redis
+    participant AWS as AWS KMS
+    participant Prom as Prometheus
+    participant Audit as Audit System
 
+    User->>FE: 1. Login with WebAuthn
+    FE->>FA: 2. Initiate authentication
+    FA->>FS: 3. Retrieve user public key
+    FS-->>FA: 4. Return public key
+    FA-->>FE: 5. Authentication success
+    FE->>BE: 6. Request JWT with public key
+    BE->>AWS: 7. Sign JWT with HSM
+    AWS-->>BE: 8. Signed JWT
+    BE-->>FE: 9. Return JWT token
+
+    User->>FE: 10. Send encrypted message
+    FE->>BE: 11. POST /relay/send (JWT + encrypted payload)
+    BE->>FA: 12. Verify JWT
+    FA-->>BE: 13. Token valid
+    BE->>RD: 14. Retrieve previous chain link
+    RD-->>BE: 15. Previous hash
+    BE->>BE: 16. Verify: SHA-256(prev_hash + current_hash) == chain_hash
+    alt Verification passed
+        BE->>RD: 17. Store message (TTL=60s)
+        RD-->>BE: 18. Storage confirmation
+        BE->>Audit: 19. Log chain verification
+        Audit->>FS: 20. Store encrypted audit log
+        BE->>Prom: 21. Report chain integrity metric
+        BE-->>FE: 22. 201 Created (message_id)
+        FE->>FE: 23. Start 55s purge countdown
+    else Verification failed
+        BE->>Audit: 24. Log chain violation
+        BE-->>FE: 25. 400 Bad Request
+    end
+
+    User->>FE: 26. Retrieve message
+    FE->>BE: 27. GET /relay/receive/:id (JWT)
+    BE->>RD: 28. Retrieve encrypted message
+    RD-->>BE: 29. Encrypted data + TTL
+    BE->>BE: 30. Verify recipient access
+    BE-->>FE: 31. Encrypted payload
+    FE->>FE: 32. Decrypt message (Web Worker)
+    FE->>User: 33. Display decrypted message
+
+    loop Auto-Purge System
+        FE->>FE: 34. Monitor TTL (55s/60s)
+        FE->>BE: 35. Confirm purge (55s)
+        BE->>RD: 36. Early deletion
+        BE->>Audit: 37. Log purge event
+    end
+
+    Note over FE,BE: Security Enforcement
+    BE->>Prom: 38. Regular health checks
+    Prom->>BE: 39. Alert on anomalies
+    BE->>AWS: 40. Quarterly key rotation
 ```
 
 ### Frontend
